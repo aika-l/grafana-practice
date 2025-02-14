@@ -17,5 +17,4 @@ function create_instance() {
 }
 
 prep_bastion
-sudo chmod +x /terraform/node_exporter.sh
 create_instance
