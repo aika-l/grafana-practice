@@ -26,6 +26,7 @@ resource "aws_instance" "web" {
   subnet_id = aws_subnet.main.id
   vpc_security_group_ids = [aws_security_group.allow_tls.id]
 
+  
   user_data = file("prometheus.sh")
   
   tags = {
