@@ -15,7 +15,7 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_key_pair" "deployer" {
-  key_name   = "ubuntu-key"
+  key_name   = "bastion"
   public_key = file("~/.ssh/id_rsa.pub")
 }
 
@@ -30,7 +30,7 @@ resource "aws_instance" "web" {
   user_data = file("prometheus.sh")
   
   tags = {
-    Name = "Graf-Ubuntu"
+    Name = "group-5"
   }
 }
 
