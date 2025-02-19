@@ -1,7 +1,7 @@
 resource "aws_security_group" "allow_tls" {
-  name        = "allow_tls"
+  name        = "group-5"
   description = "Allow TLS inbound traffic"
-  vpc_id = aws_vpc.main.id
+  vpc_id = aws_vpc.group-5.id
 
   ingress {
     description      = "TLS from VPC"
@@ -27,7 +27,16 @@ resource "aws_security_group" "allow_tls" {
     to_port          = 22
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"] 
-    # needs for ansible
+    
+  }
+
+    ingress {
+    description      = "TLS from VPC"
+    from_port        = 9100
+    to_port          = 9100
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"] 
+    # needs for node exporter
   }
 
   egress {

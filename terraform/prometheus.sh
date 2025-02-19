@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sudo apt update
-
 #1. Create Prometheus user
 sudo useradd --system --no-create-home --shell /bin/false prometheus
 
@@ -48,28 +46,23 @@ WantedBy=multi-user.target[Install]
 WantedBy=multi-user.target
 EOF'
 
-
 #6. Enable and start prometheus
 sudo systemctl daemon-reload
 sudo systemctl enable prometheus
 sudo systemctl start prometheus
 
 
-# Installation of Node Exporter
-#sudo chmod +x node_exporter.sh
-#./node_exporter.sh
-
-#1. Create Node Exporter user
+#7. Create Node Exporter user
 sudo useradd --system --no-create-home --shell /bin/false node_exporter
 
-#2. Download and extract node exporter
+#8. Download and extract node exporter
 wget https://github.com/prometheus/node_exporter/releases/download/v1.6.1/node_exporter-1.6.1.linux-amd64.tar.gz
 tar -xvf node_exporter-1.6.1.linux-amd64.tar.gz
 
-#3. Move the binaries
+#9. Move the binaries
 sudo mv node_exporter-1.6.1.linux-amd64/node_exporter /usr/local/bin/
 
-#4. Configure node exporter as a systemd service
+#10. Configure node exporter as a systemd service
 sudo bash -c 'cat <<EOF > /etc/systemd/system/node_exporter.service
 [Unit]
 Description=Node Exporter
@@ -89,31 +82,26 @@ ExecStart=/usr/local/bin/node_exporter \
 WantedBy=multi-user.target
 EOF'
 
-#6. Enable and start node exporter
+#11. Enable and start node exporter
 sudo systemctl enable node_exporter
 sudo systemctl start node_exporter
-sudo systemctl status node_exporter
 
-#7. Add Node Exporter as a Target in Prometheus
-PROMETHEUS_YML="/etc/prometheus/prometheus.yml"
+#12. Add Node Exporter as a Target in Prometheus
+PROMETHEUS_FILE="/etc/prometheus/prometheus.yml"
 
-#8. Define the new job configuration to append
-CONFIG="
-  - job_name: 'node_export'
-    static_configs:
-      - targets: ['localhost:9100']
-"
+echo -e "\n# New scrape job for node_exporter" >> "$PROMETHEUS_FILE"
+echo -e "  - job_name: 'node_export'" >> "$PROMETHEUS_FILE"
+echo -e "    static_configs:" >> "$PROMETHEUS_FILE"
+echo -e "      - targets: [\"localhost:9100\"]" >> "$PROMETHEUS_FILE"
 
-# Append the configuration to the 'scrape_configs' section
-sudo sed -i "/scrape_configs:/a $CONFIG" "$PROMETHEUS_YML"
 
-#9. Reload Prometheus Configuration
+#13. Reload Prometheus Configuration
 promtool check config /etc/prometheus/prometheus.yml
 curl -X POST http://localhost:9090/-/reload
 
 
 
-#1. Install grafana
+#14. Install Grafana
 sudo apt-get install -y apt-transport-https software-properties-common
 wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
 echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
@@ -122,6 +110,6 @@ sudo apt-get update
 sudo apt-get -y install grafana
 
 
-#2. Enable 
+#15. Enable and start Grafana
 sudo systemctl enable grafana-server
 sudo systemctl start grafana-server
