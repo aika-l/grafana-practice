@@ -19,6 +19,19 @@ resource "aws_key_pair" "deployer" {
   public_key = file("~/.ssh/id_rsa.pub")
 }
 
+resource "aws_s3_bucket" "terraform_state" {
+  bucket = "group5-grafana-practice"
+
+
+}
+
+resource "aws_s3_bucket_versioning" "terraform_state_versioning" {
+  bucket = aws_s3_bucket.terraform_state.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
 resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
   key_name = aws_key_pair.deployer.key_name
@@ -36,3 +49,4 @@ resource "aws_instance" "web" {
 output ec2 {
     value = aws_instance.web.public_ip
 }
+
