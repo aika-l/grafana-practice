@@ -21,8 +21,6 @@ resource "aws_key_pair" "deployer" {
 
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "group5-grafana-practice"
-
-
 }
 
 resource "aws_s3_bucket_versioning" "terraform_state_versioning" {
