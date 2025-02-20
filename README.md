@@ -1,4 +1,4 @@
-18.119.139.244# Installing Prometheus and Grafana using Terraform
+# Installing Prometheus and Grafana using Terraform
 
 This repo covers creation of infrastructure using Terraform and installing Prometheus, Grafana and Node Exporter.
 
