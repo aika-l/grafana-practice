@@ -36,6 +36,7 @@ The starting point for our application to perform all the tasks automatically is
     1. Created S3 bucket and enabled versioning in ec2.tf file.
     2. Used a local backend initially to create the S3 bucket and versioning.
     3. Manually configured the remote backend after the resources are created by modifying the backend.tf file.).
+    4. S3 bucket and ec2 instance are created in the same region which you chose in your tfvars file.
 
 ### Creating custom VPC
  The file: **vpc.tf** defines custom VPC, subnets, internet gateway, route table, and route table associations.
@@ -81,7 +82,7 @@ During creation of EC2 instance that happens in ec2.tf file, it will also instal
 
 
 #### Team members and estimated time of work done by each member:
-* Aika: 10hrs
-* Rada: 
-* Muna: 
-* Kairat:
+* Aika: 20hrs
+* Rada: 14hrs
+* Muna: 10hrs
+* Kairat: 5hrs
