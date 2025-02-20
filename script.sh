@@ -17,7 +17,6 @@ function create_instance() {
 }
 
 function remote_backend() {
-
   cat <<EOF > backend.tf
 terraform {
   backend "s3" {
@@ -31,8 +30,6 @@ EOF
 
   yes | terraform init -reconfigure
 }
-
-
 
 prep_bastion
 create_instance
