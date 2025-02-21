@@ -3,7 +3,7 @@
 This repo covers creation of infrastructure using Terraform and installing Prometheus, Grafana and Node Exporter.
 
 ## Table of Contents:
-- [Pre-requisites](#pre-requisites)
+- [Prerequisites](#prerequisites)
 - [How to run the program](#how-to-run-the-program)
 - [Creating custom VPC](#creating-custom-vpc)
 - [Creating security group](#creating-security-group)
@@ -13,7 +13,7 @@ This repo covers creation of infrastructure using Terraform and installing Prome
 - [Installing Prometheus Grafana and Node Exporter](#installing-prometheus-grafana-and-node-exporter)
 
 
-### Pre-requisites
+### Prerequisites
 - [x] Have EC2 instance - Ubunutu 22.04 (host) started in AWS.
 - [x] Have IAM User with Terraform permissions 
 - [x] Create S3 bucket manually on AWS Console for backend, use versioning. Inside the file **backend.tf** replace values for a ***bucketname*** and ***region***  
@@ -29,7 +29,7 @@ instance_type = "t2.micro"
 ```
 
 ### How to run the program
-The starting point for our application to perform all the tasks automatically is inside the **script.sh** file. Which needs to be started once you have all the pre-reqs ready.
+The starting point for our application to perform all the tasks automatically is inside the **script.sh** file. Which needs to be started once you have all the prereqs ready.
   - Function prep_bastion() will update Ubuntu VM and install Terraform on that VM.
   - Function create_instance() will go into Terraform folder that above function created. It will initialize Terraform and applies Terraform.
 
@@ -44,7 +44,7 @@ File **sg.tf** configures the security group and opens ports:
    - 9100 : for Node Exporter
   
 ### Creating variables
-File **variables.tf** contains variables for our code reusability 
+File **variables.tf** contains variables for our code reusability and flexibility
 
 ### Remote backend
 Terraform will initialize backend on remote backend using S3 bucket that was created as a prerequisite which is described in **backend.tf** file. It also have ***use_locking*** set to true, so it can use lockfile for locking the state file.
