@@ -16,24 +16,5 @@ function create_instance() {
     terraform apply --auto-approve
 }
 
-function remote_backend() {
-  cat <<EOF > backend.tf
-terraform {
-  backend "s3" {
-    bucket = "group5-grafana-practice"
-    key    = "terraform.tfstate"
-    region = "us-east-2"
-    encrypt = true
-  }
-}
-EOF
-
-  yes | terraform init -reconfigure
-}
-
 prep_bastion
 create_instance
-sleep 20
-remote_backend
-
-
