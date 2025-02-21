@@ -1,6 +1,3 @@
-# Installing Prometheus and Grafana using Terraform
-
-This repo covers creation of infrastructure using Terraform and installing Prometheus, Grafana and Node Exporter.
 
 ## Table of Contents:
 - [Prerequisites](#prerequisites)
